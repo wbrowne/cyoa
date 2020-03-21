@@ -23,7 +23,7 @@ type PlotOptions struct {
 }
 
 func main() {
-	story := getJsonFileAsMap("gopher.json")
+	story := importJsonAsStory("gopher.json")
 
 	tmpl := template.Must(template.ParseFiles("plot-point.html"))
 
@@ -37,13 +37,13 @@ func main() {
 		arc := vars["arc"]
 
 		tmpl.Execute(w, story[arc])
-	}).Methods("GET")
+	})
 
 	fmt.Println("Starting the server on :8080")
 	http.ListenAndServe(":8080", router)
 }
 
-func getJsonFileAsMap(filename string) Story {
+func importJsonAsStory(filename string) Story {
 	content, err := ioutil.ReadFile(filename)
 
 	var story Story
