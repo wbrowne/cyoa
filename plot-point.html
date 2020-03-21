@@ -1,10 +1,12 @@
-<h1>{{.Title}}</h1>
-{{range $element := .Story}}
-    <p>{{$element}}</p>
-{{end}}
+{{ define "plot-point" }}
+    <h1>{{.Title}}</h1>
+    {{range $element := .Story}}
+        <p>{{$element}}</p>
+    {{end}}
 
-{{range $option := .Options}}
-    <div>
-        <a href="/{{$option.Arc}}">{{$option.Text}}</a>
-    </div>
+    {{range $option := .Options}}
+        <div>
+            <a href="/{{$option.Arc}}">{{$option.Text}}</a>
+        </div>
+    {{end}}
 {{end}}

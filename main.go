@@ -25,7 +25,7 @@ type PlotOptions struct {
 func main() {
 	story := importJsonAsStory("gopher.json")
 
-	tmpl := template.Must(template.ParseFiles("plot-point.html"))
+	tmpl := template.Must(template.ParseFiles("layout.html", "plot-point.html"))
 
 	router := mux.NewRouter()
 	router.HandleFunc("/", func(w http.ResponseWriter, router *http.Request) {
