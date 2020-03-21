@@ -2,3 +2,9 @@
 {{range $element := .Story}}
     <p>{{$element}}</p>
 {{end}}
+
+{{range $option := .Options}}
+    <div>
+        <a href="/{{$option.Arc}}">{{$option.Text}}</a>
+    </div>
+{{end}}

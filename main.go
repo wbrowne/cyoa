@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/gorilla/mux"
 	"html/template"
 	"io/ioutil"
 	"net/http"
@@ -11,8 +12,8 @@ import (
 type Story map[string]PlotPoint
 
 type PlotPoint struct {
-	Title   string    `json:"title"`
-	Story   []string  `json:"story"`
+	Title   string        `json:"title"`
+	Story   []string      `json:"story"`
 	Options []PlotOptions `json:"options"`
 }
 
@@ -24,13 +25,22 @@ type PlotOptions struct {
 func main() {
 	story := getJsonFileAsMap("gopher.json")
 
-	http.HandleFunc("/hello", func(w http.ResponseWriter, req *http.Request) {
-		tmpl := template.Must(template.ParseFiles("plot-point.html"))
-		tmpl.Execute(w, story["intro"])
+	tmpl := template.Must(template.ParseFiles("plot-point.html"))
+
+	router := mux.NewRouter()
+	router.HandleFunc("/", func(w http.ResponseWriter, router *http.Request) {
+		http.Redirect(w, router, "/intro", http.StatusFound)
 	})
 
+	router.HandleFunc("/{arc}", func(w http.ResponseWriter, r *http.Request) {
+		vars := mux.Vars(r)
+		arc := vars["arc"]
+
+		tmpl.Execute(w, story[arc])
+	}).Methods("GET")
+
 	fmt.Println("Starting the server on :8080")
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":8080", router)
 }
 
 func getJsonFileAsMap(filename string) Story {
