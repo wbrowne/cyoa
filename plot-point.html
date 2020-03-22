@@ -1,12 +1,21 @@
 {{ define "plot-point" }}
     <h1>{{.Title}}</h1>
+    <div class="gopher-container">
+        <img src="./static/assets/gopher.png" alt="cute gopher image">
+    </div>
     {{range $element := .Story}}
         <p>{{$element}}</p>
     {{end}}
 
-    {{range $option := .Options}}
-        <div>
+    {{ if .Options}}
+    <p class="choice">Choose your adventure...</p>
+    {{ end }}
+
+    <div class="options-container">
+        {{range $option := .Options}}
+        <div class="options">
             <a href="/{{$option.Arc}}">{{$option.Text}}</a>
         </div>
-    {{end}}
+        {{end}}
+    </div>
 {{end}}
