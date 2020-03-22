@@ -9,6 +9,11 @@ import (
 	"net/http"
 )
 
+const (
+    STATIC_DIR = "/static/"
+    PORT       = "8080"
+)
+
 type Story map[string]PlotPoint
 
 type PlotPoint struct {
@@ -28,6 +33,10 @@ func main() {
 	tmpl := template.Must(template.ParseFiles("layout.html", "plot-point.html"))
 
 	router := mux.NewRouter()
+
+    // Static assets
+    router.PathPrefix(STATIC_DIR).Handler(http.StripPrefix(STATIC_DIR, http.FileServer(http.Dir("."+STATIC_DIR))))
+
 	router.HandleFunc("/", func(w http.ResponseWriter, router *http.Request) {
 		http.Redirect(w, router, "/intro", http.StatusFound)
 	})
