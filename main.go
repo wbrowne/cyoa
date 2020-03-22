@@ -11,7 +11,6 @@ import (
 
 const (
     STATIC_DIR = "/static/"
-    PORT       = "8080"
 )
 
 type Story map[string]PlotPoint
