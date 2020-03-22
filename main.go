@@ -33,8 +33,8 @@ func main() {
 
 	router := mux.NewRouter()
 
-    // Static assets
-    router.PathPrefix(STATIC_DIR).Handler(http.StripPrefix(STATIC_DIR, http.FileServer(http.Dir("."+STATIC_DIR))))
+    	// Static assets
+    	router.PathPrefix(STATIC_DIR).Handler(http.StripPrefix(STATIC_DIR, http.FileServer(http.Dir("."+STATIC_DIR))))
 
 	router.HandleFunc("/", func(w http.ResponseWriter, router *http.Request) {
 		http.Redirect(w, router, "/intro", http.StatusFound)
